@@ -1,0 +1,25 @@
+{
+  "name": "sppd",
+  "version": "1.0.0",
+  "description": "sppd",
+  "main": "bot.js",
+  "scripts": {
+    "test": "nodemon bot.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Khuzha/sppd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Khuzha/sppd/issues"
+  },
+  "homepage": "https://github.com/Khuzha/sppd#readme",
+  "dependencies": {
+    "mongodb": "^3.4.0",
+    "nodemon": "^2.0.2",
+    "telegraf": "^3.34.1"
+  }
+}
