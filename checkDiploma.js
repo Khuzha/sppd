@@ -23,8 +23,7 @@ getDipNumber.hears(buttons.back, ctx => {
 getDipNumber.hears(/[0-9]/, async ({ db, reply, session, scene, message }) => {
   const inDb = await db.collection('allDiplomas').findOne({dipNumber: +message.text})
   if (inDb == null) {
-    await reply(text.notFound)
-    return scene.enter('getDipNumber')
+    return reply(text.notFound)
   }
 
   session.inDb = inDb
@@ -49,22 +48,24 @@ getPass.hears(buttons.back, ({ scene }) => {
 
 getPass.hears(/^[0-9a-zA-Z]{16}$/, async ({ session, message, reply, scene, replyWithPhoto }) => {
   if (session.inDb.pass != message.text) {
-    await reply(text.wrongPass)
-    return scene.enter('getPass')
+    return reply(text.wrongPass)
   }
 
   const { lastName, firstName, fathersName, date, faculty, photo_id } = session.inDb
 
   try {
-    replyWithPhoto(photo_id, { caption: 
-      `${lastName} ${firstName} ${fathersName} получил диплом выпускника КНИТУ-КАИ им.Туполева на факультете ${faculty} ${date}г.`
+    await replyWithPhoto(photo_id, { caption: 
+      `✅ Диплом подтвержден: ${lastName} ${firstName} ${fathersName} получил диплом выпускника КНИТУ-КАИ им.Туполева на факультете ${faculty} ${date}г.`
     })
+    scene.leave()
   } catch (err) {
     console.log(err)
   }
 })
 
 getPass.on('message', ({ scene }) => scene.enter('getPass'))
+
+getPass.leave(ctx => functions.start(ctx))
 
 
 module.exports = { getDipNumber, getPass }

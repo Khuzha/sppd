@@ -112,12 +112,16 @@ setPass.hears(buttons.back, ({ scene }) => {
   return scene.enter('setDate')
 })
 
-setPass.hears(/^[0-9a-zA-Z]{16}$/, ({ message, scene, session }) => {
+// setPass.hears(/^[0-9a-zA-Z]{16}$/, ({ message, scene, session }) => {
+setPass.on('text', ({ message, scene, session }) => {
+  if (message.text.length !== 16) {
+    return scene.enter('setPass')
+  }
   session.pass = message.text
   return scene.enter('setLastName')
 })
 
-setPass.on('message', ({ scene }) => scene.enter('setDipNumber'))
+setPass.on('message', ({ scene }) => scene.enter('setPass'))
 
 // --- ---
 
